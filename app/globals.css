@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  --background: #060b17;
+  --surface: #0c1426;
+  --border: rgb(255 255 255 / 0.09);
+  --foreground: #eef2f9;
+  --muted: #94a3bd;
+  --accent: #5b9bff;
+  --good: #34d399;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-good: var(--good);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: #060b17;
+}
+
+.hero-bg {
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 30%, rgb(91 155 255 / 0.22), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 10% 90%, rgb(52 211 153 / 0.08), transparent 70%),
+    linear-gradient(180deg, #0a1428 0%, #060b17 100%);
+}
+
+.glass {
+  background: rgb(255 255 255 / 0.04);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+}
