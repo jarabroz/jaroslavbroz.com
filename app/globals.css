@@ -18,8 +18,8 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-good: var(--good);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans-face);
+  --font-mono: var(--font-mono-face);
 }
 
 html {
@@ -29,7 +29,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-sans-face), system-ui, sans-serif;
 }
 
 ::selection {
