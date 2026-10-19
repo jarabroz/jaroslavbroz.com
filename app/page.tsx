@@ -1,3 +1,5 @@
+import { talksByYear } from "./talks";
+
 const LINKEDIN = "https://www.linkedin.com/in/jaroslav-broz";
 const GITHUB = "https://github.com/jarabroz";
 const LINKTREE = "https://linktr.ee/jara.broz";
@@ -367,9 +369,13 @@ export default function Home() {
         <Section
           id="speaking"
           eyebrow="Speaking"
-          title="Invite me to your conference, university or meetup"
+          title="Talks and appearances"
+          intro="Fifteen appearances since 2022: nine conference talks, five webinars and one podcast. Invite me to your conference, university or meetup."
         >
-          <ul className="space-y-3">
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+            Topics I speak about
+          </p>
+          <ul className="mt-4 space-y-3">
             {talks.map((t, i) => (
               <li key={t} className="glass flex gap-5 rounded-2xl p-5">
                 <span className="font-mono text-accent">0{i + 1}</span>
@@ -377,10 +383,54 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-sm text-muted">
-            Past stages include CADfórum and Dlubal Community Days, plus
-            structural engineering conferences.
-          </p>
+
+          <div className="mt-14 space-y-12">
+            {talksByYear.map(({ year, talks: yearTalks }) => (
+              <div key={year}>
+                <h3 className="font-mono text-sm tracking-[0.18em] text-accent">
+                  {year}
+                </h3>
+                <ul className="mt-4 divide-y divide-border border-y border-border">
+                  {yearTalks.map((t) => (
+                    <li
+                      key={`${t.date}-${t.event}`}
+                      className="grid gap-x-8 gap-y-2 py-5 sm:grid-cols-[8rem_1fr]"
+                    >
+                      <div>
+                        <p className="font-mono text-sm text-muted">{t.date}</p>
+                        <p className="mt-1 inline-block rounded-full border border-border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted">
+                          {t.kind}
+                        </p>
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold leading-snug">{t.title}</p>
+                        <p className="mt-1 text-sm text-muted">
+                          <a href={t.href} className="text-foreground hover:text-accent">
+                            {t.event}
+                          </a>
+                          {t.place && <span>, {t.place}</span>}
+                          {t.with && <span> · with {t.with}</span>}
+                        </p>
+                        {t.links && (
+                          <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                            {t.links.map((l) => (
+                              <a
+                                key={l.href}
+                                href={l.href}
+                                className="text-accent hover:underline"
+                              >
+                                {l.label} →
+                              </a>
+                            ))}
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </Section>
 
         <Section
