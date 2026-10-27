@@ -1,18 +1,11 @@
 import { talksByYear } from "./talks";
+import { SiteHeader } from "./components/SiteHeader";
+import { SiteFooter } from "./components/SiteFooter";
+import { formatDate, getPosts, postHref } from "@/lib/insights";
 
 const LINKEDIN = "https://www.linkedin.com/in/jaroslav-broz";
 const GITHUB = "https://github.com/jarabroz";
 const LINKTREE = "https://linktr.ee/jara.broz";
-
-const nav = [
-  ["About", "#about"],
-  ["Areas of Practice", "#work"],
-  ["Dlubal", "#dlubal"],
-  ["AI in Engineering", "#ai"],
-  ["Speaking", "#speaking"],
-  ["Writing", "#writing"],
-  ["Career", "#career"],
-] as const;
 
 const work = [
   {
@@ -82,12 +75,6 @@ const talks = [
   "Automating structural workflows with APIs, Python and Grasshopper",
 ];
 
-const articles = [
-  { date: "Oct 2026", title: "Structural Engineering Should Be About Engineering" },
-  { date: "Apr 2026", title: "The Structural Engineer of Tomorrow Runs Code and Speaks with AI" },
-  { date: "Feb 2026", title: "Dlubal API: Practical Use Cases and Key Benefits" },
-  { date: "Feb 2026", title: "Integration of RFEM 6 into AI Applications via MCP Server" },
-];
 
 const career = [
   {
@@ -146,31 +133,10 @@ function Section({
 }
 
 export default function Home() {
+  const latest = getPosts().slice(0, 4);
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-20 px-4 pt-4">
-        <div className="glass mx-auto flex max-w-6xl items-center justify-between rounded-2xl px-5 py-3">
-          <a href="#top" className="flex items-center gap-3 text-sm font-semibold">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent font-mono text-xs font-bold text-background">
-              JB
-            </span>
-            <span className="hidden sm:inline">Jaroslav Broz</span>
-          </a>
-          <nav className="hidden gap-5 text-sm text-muted lg:flex">
-            {nav.map(([label, href]) => (
-              <a key={href} href={href} className="hover:text-foreground">
-                {label}
-              </a>
-            ))}
-          </nav>
-          <a
-            href="#contact"
-            className="rounded-full bg-foreground px-4 py-2 text-xs font-semibold text-background hover:opacity-90"
-          >
-            Let&apos;s talk
-          </a>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main id="top">
         <div className="hero-bg relative overflow-hidden">
@@ -435,25 +401,27 @@ export default function Home() {
 
         <Section
           id="writing"
-          eyebrow="Writing"
+          eyebrow="Insights"
           title="The Brož Code"
           intro="My newsletter on code, APIs, structural analysis and AI in engineering."
         >
           <ul className="divide-y divide-border border-y border-border">
-            {articles.map((a) => (
-              <li key={a.title}>
+            {latest.map((p) => (
+              <li key={p.slug}>
                 <a
-                  href={LINKEDIN}
+                  href={postHref(p)}
                   className="flex flex-col gap-1 py-4 hover:text-accent sm:flex-row sm:gap-6"
                 >
-                  <span className="w-24 shrink-0 font-mono text-sm text-muted">{a.date}</span>
-                  <span>{a.title}</span>
+                  <span className="w-28 shrink-0 font-mono text-sm text-muted">
+                    {formatDate(p.date)}
+                  </span>
+                  <span>{p.title}</span>
                 </a>
               </li>
             ))}
           </ul>
-          <a href={LINKEDIN} className="mt-6 inline-block text-sm text-accent hover:underline">
-            Read more on LinkedIn →
+          <a href="/insights/" className="mt-6 inline-block text-sm text-accent hover:underline">
+            All insights →
           </a>
         </Section>
 
@@ -509,9 +477,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-border py-8 text-center text-sm text-muted">
-        © {new Date().getFullYear()} Jaroslav Broz. Views are my own.
-      </footer>
+      <SiteFooter />
     </>
   );
 }
